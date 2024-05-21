@@ -4,9 +4,6 @@ CFLAGS = -Wall -Wextra
 # Find all C source files in the current directory
 SRCS := $(wildcard *.c)
 
-# Include directory
-INCLUDES := -I./include -I./interface
-
 # Generate corresponding object file names
 OBJS := $(SRCS:.c=.o)
 
@@ -18,10 +15,10 @@ EXECS := $(SRCS:.c=)
 all: $(EXECS)
 
 %: %.o
-	$(CC) $(CFLAGS) $(INCLUDES)  $< -o $@
+	$(CC) $(CFLAGS) $< -o $@
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES)  -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJS) $(EXECS)
