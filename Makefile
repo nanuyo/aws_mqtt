@@ -1,24 +1,32 @@
+# Compiler
 CC = gcc
-CFLAGS = -Wall -Wextra
 
-# Find all C source files in the current directory
+# Compiler flags
+CFLAGS = -Wall -Wextra -Wpedantic -DMQTT_DO_NOT_USE_CUSTOM_CONFIG
+
+
+# Include directory
+INCLUDES = -I./include -I./interface
+
+
+# Source files
+#SRCS = core_mqtt_serializer.c core_mqtt_state.c core_mqtt.c mqtt_demo_plaintext.c plaintext_posix.c backoff_algorithm.c sockets_posix.c clock_posix.c
 SRCS := $(wildcard *.c)
 
-# Generate corresponding object file names
-OBJS := $(SRCS:.c=.o)
+# Object files
+OBJS = $(SRCS:.c=.o)
 
-# Generate corresponding executable file names
-EXECS := $(SRCS:.c=)
+# Executable name
+TARGET = my_program
 
-.PHONY: all clean
+# Build rule
+$(TARGET): $(OBJS)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $@ $^
 
-all: $(EXECS)
-
-%: %.o
-	$(CC) $(CFLAGS) $< -o $@
-
+# Compile rule
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
+# Clean rule
 clean:
-	rm -f $(OBJS) $(EXECS)
+	rm -f $(OBJS) $(TARGET)
