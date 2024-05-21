@@ -5,7 +5,7 @@ CFLAGS = -Wall -Wextra
 SRCS := $(wildcard *.c)
 
 # Include directory
-INCLUDES = -I./include -I./interface
+INCLUDES := -I./include -I./interface
 
 # Generate corresponding object file names
 OBJS := $(SRCS:.c=.o)
